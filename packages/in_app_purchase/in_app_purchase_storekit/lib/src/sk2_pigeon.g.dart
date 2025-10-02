@@ -532,6 +532,7 @@ class SK2TransactionMessage {
     required this.productId,
     required this.purchaseDate,
     this.expirationDate,
+    this.revocationDate,
     this.purchasedQuantity = 1,
     this.appAccountToken,
     this.restoring = false,
@@ -549,6 +550,8 @@ class SK2TransactionMessage {
   String purchaseDate;
 
   String? expirationDate;
+
+  String? revocationDate;
 
   int purchasedQuantity;
 
@@ -569,6 +572,7 @@ class SK2TransactionMessage {
       productId,
       purchaseDate,
       expirationDate,
+      revocationDate,
       purchasedQuantity,
       appAccountToken,
       restoring,
@@ -590,12 +594,13 @@ class SK2TransactionMessage {
       productId: result[2]! as String,
       purchaseDate: result[3]! as String,
       expirationDate: result[4] as String?,
-      purchasedQuantity: result[5]! as int,
-      appAccountToken: result[6] as String?,
-      restoring: result[7]! as bool,
-      receiptData: result[8] as String?,
-      error: result[9] as SK2ErrorMessage?,
-      jsonRepresentation: result[10] as String?,
+      revocationDate: result[5] as String?,
+      purchasedQuantity: result[6]! as int,
+      appAccountToken: result[7] as String?,
+      restoring: result[8]! as bool,
+      receiptData: result[9] as String?,
+      error: result[10] as SK2ErrorMessage?,
+      jsonRepresentation: result[11] as String?,
     );
   }
 

@@ -240,6 +240,7 @@ extension Transaction {
       productId: productID,
       purchaseDate: dateFormatter.string(from: purchaseDate),
       expirationDate: expirationDate.map { dateFormatter.string(from: $0) },
+      revocationDate: revocationDate.map { dateFormatter.string(from: $0) },
       purchasedQuantity: Int64(purchasedQuantity),
       appAccountToken: appAccountToken?.uuidString,
       restoring: receipt != nil,

@@ -150,10 +150,45 @@ class SK2TransactionObserverWrapper implements InAppPurchase2CallbackAPI {
 
   @override
   void onTransactionsUpdated(List<SK2TransactionMessage> newTransactions) {
+    final DateTime nowUtc = DateTime.now().toUtc();
+    final List<SK2TransactionMessage> nonExpiredTransactions = newTransactions
+        .where(
+          (SK2TransactionMessage transaction) =>
+              !_isTransactionExpired(transaction, nowUtc) &&
+              transaction.revocationDate == null,
+        )
+        .toList();
+
+    if (nonExpiredTransactions.isEmpty) {
+      return;
+    }
+
     transactionsCreatedController.add(
-      newTransactions
+      nonExpiredTransactions
           .map((SK2TransactionMessage e) => e.convertToDetails())
           .toList(),
     );
   }
+}
+
+DateTime? _parseExpirationDate(String expirationDateString) {
+  final DateTime? parsed = DateTime.tryParse(expirationDateString);
+  if (parsed == null) {
+    return null;
+  }
+  return parsed.isUtc ? parsed : parsed.toUtc();
+}
+
+bool _isTransactionExpired(SK2TransactionMessage transaction, DateTime nowUtc) {
+  final String? expirationDateString = transaction.expirationDate;
+  if (expirationDateString == null || expirationDateString.isEmpty) {
+    return false;
+  }
+
+  final DateTime? expirationDate = _parseExpirationDate(expirationDateString);
+  if (expirationDate == null) {
+    return false;
+  }
+
+  return expirationDate.isBefore(nowUtc);
 }

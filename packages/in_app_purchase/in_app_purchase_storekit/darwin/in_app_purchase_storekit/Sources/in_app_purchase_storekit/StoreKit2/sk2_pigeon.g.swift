@@ -468,6 +468,7 @@ struct SK2TransactionMessage: Hashable {
   var productId: String
   var purchaseDate: String
   var expirationDate: String? = nil
+  var revocationDate: String? = nil
   var purchasedQuantity: Int64
   var appAccountToken: String? = nil
   var restoring: Bool
@@ -488,6 +489,7 @@ struct SK2TransactionMessage: Hashable {
     let receiptData: String? = nilOrValue(pigeonVar_list[8])
     let error: SK2ErrorMessage? = nilOrValue(pigeonVar_list[9])
     let jsonRepresentation: String? = nilOrValue(pigeonVar_list[10])
+    let revocationDate: String? = nilOrValue(pigeonVar_list[5])
 
     return SK2TransactionMessage(
       id: id,
@@ -495,6 +497,7 @@ struct SK2TransactionMessage: Hashable {
       productId: productId,
       purchaseDate: purchaseDate,
       expirationDate: expirationDate,
+      revocationDate: revocationDate,
       purchasedQuantity: purchasedQuantity,
       appAccountToken: appAccountToken,
       restoring: restoring,
@@ -510,6 +513,7 @@ struct SK2TransactionMessage: Hashable {
       productId,
       purchaseDate,
       expirationDate,
+      revocationDate,
       purchasedQuantity,
       appAccountToken,
       restoring,
