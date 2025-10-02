@@ -178,12 +178,12 @@ class InAppPurchaseStoreKitPlatform extends InAppPurchasePlatform {
         );
       }
 
-      await SK2Product.purchase(
+      final SK2ProductPurchaseResult ret = await SK2Product.purchase(
         purchaseParam.productDetails.id,
         options: options,
       );
 
-      return true;
+      return ret == SK2ProductPurchaseResult.success;
     }
     await _skPaymentQueueWrapper.addPayment(
       SKPaymentWrapper(
